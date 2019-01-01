@@ -18,9 +18,9 @@ class ImdbWithTabsSpider(scrapy.Spider):
        	l = response.css('div.subNavListContainer > ul > li > a::attr(href)')[:4].extract()
        	urls = [l[0], l[3]]
        	for url in urls:
-	   		self.log('3 '+url)
+	   		# self.log('3 '+url)
 	   		url = response.urljoin(url)
-	   		self.log(' 2 '+ url)
+	   		# self.log(' 2 '+ url)
 	   		yield scrapy.Request(url = url, callback= self.parse_detail)
 
     def parse_detail(self, response):
