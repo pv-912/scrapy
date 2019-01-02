@@ -49,12 +49,28 @@ class NextPageItemWithLoader(scrapy.Item):
         output_processor=TakeFirst(),
     )
 
-# class NextPageItem(ItemLoader):
-# 	default_input_processor = MapCompose(unicode.strip)
-#     default_output_processor = TakeFirst()
-#     Title = scrapy.Field(serializer=str)
-#     Director = scrapy.Field()
-#     Badges = scrapy.Field()
-#     Stars = scrapy.Field()
-#     Img_src = scrapy.Field()
-#     Description = scrapy.Field()
+class ScrollPageLoader(scrapy.Item):
+    Title = scrapy.Field(
+        input_processor=MapCompose(unicode.strip),
+        output_processor=Join(),
+    )
+    Director = scrapy.Field(
+        input_processor=MapCompose(unicode.strip),
+        output_processor=Join(),
+    )
+    Badges = scrapy.Field(
+        input_processor=MapCompose(unicode.strip),
+        output_processor=Join(),
+    )
+    Stars = scrapy.Field(
+        input_processor=MapCompose(unicode.strip),
+        output_processor=Join(),
+    )
+    Img_src = scrapy.Field(
+        input_processor=MapCompose(unicode.strip),
+        output_processor=Join(),
+    )
+    Description = scrapy.Field(
+        input_processor=MapCompose(unicode.strip),
+        output_processor=Join(),
+    )
