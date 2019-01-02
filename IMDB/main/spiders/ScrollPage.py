@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import scrapy
-from first.items import NextPageItem, ScrollPageLoader
+from main.items import NextPageItem, ScrollPageLoader
 from scrapy.loader import ItemLoader
 
 class ImdbWithItemLoaderSpider(scrapy.Spider):
@@ -14,9 +14,19 @@ class ImdbWithItemLoaderSpider(scrapy.Spider):
 
 				self.log('I just visited' + response.url)
 
+				#input from users
+				nextPage = 0
+				prevPage = 0
+				isNext = input("Want to fetch old or upcoming? Enter 0 for old and 1 for upcoming : ")
+				if(isNext == 1):
+					nextPage = input("Enter the number of months to get upcoming movies. : ")
+
+				else:
+					prevPage = input("Enter the number of old movie's month. : ")
+
 				urls = response.css('div.subNavListContainer > ul > :nth-child(4) > a::attr(href) ').extract_first()
 				url = response.urljoin(urls)
-				yield scrapy.Request(url = url, callback= self.parse_detail_with_item_loader,  meta={'counts':0})
+				yield scrapy.Request(url = url, callback= self.parse_detail_with_item_loader,  meta={'countNext':nextPage, 'countPrev':prevPage})
 
 
 
@@ -24,10 +34,9 @@ class ImdbWithItemLoaderSpider(scrapy.Spider):
 				
 				self.log('I just visited ' + response.url)
 
-
 				# counts value from meta
-				counts = response.meta['counts']
-				self.log(counts)
+				countNext = response.meta['countNext']
+				countPrev = response.meta['countPrev']
 
 				#crawling of url from response
 				for cont in response.css('table > tbody'):
@@ -41,10 +50,22 @@ class ImdbWithItemLoaderSpider(scrapy.Spider):
 						yield il.load_item()
 
 				#further url fetch for next
-				if(counts<2):
-					urls = response.css('div.see-more > a::attr(href)')[1:].extract();
+				if(countNext>0):
+
+					urls = response.css('div.see-more > a::attr(href)')[1:].extract()
+
+					self.log(urls)
 					for url in urls:
 						url = response.urljoin(url)
-						yield scrapy.Request(url = url, callback= self.parse_detail_with_item_loader,  meta={'counts': counts+1})
+						yield scrapy.Request(url = url, callback= self.parse_detail_with_item_loader,  meta={'countNext': countNext-1, 'countPrev': 0})
+
+				#further url fetch for prev
+				if(countPrev>0):
+
+					urls = response.css('div.see-more > a::attr(href)').extract_first()
+
+					self.log(urls)
+					url = response.urljoin(urls)
+					yield scrapy.Request(url = url, callback= self.parse_detail_with_item_loader,  meta={'countPrev': countPrev-1, 'countNext':0})
 
 

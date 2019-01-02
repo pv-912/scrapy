@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import scrapy
-from first.items import NextPageItem, NextPageItemWithLoader
+from main.items import NextPageItem, NextPageItemWithLoader
 from scrapy.loader import ItemLoader
 
 class ImdbWithItemLoaderSpider(scrapy.Spider):

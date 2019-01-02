@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import scrapy
-from first.items import NextPageItem
+from main.items import NextPageItem
 
 class ImdbWithLoaderSpider(scrapy.Spider):
 	name = 'imdb-with-tabs'
