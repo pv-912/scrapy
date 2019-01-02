@@ -6,9 +6,19 @@
 # https://doc.scrapy.org/en/latest/topics/items.html
 
 import scrapy
-
+from scrapy.loader import ItemLoader
+from scrapy.loader.processors import TakeFirst, MapCompose, Join
+from w3lib.html import remove_tags
 
 class FirstItem(scrapy.Item):
     # define the fields for your item here like:
     # name = scrapy.Field()
     pass
+
+class NextPageItem(scrapy.Item):
+    Title = scrapy.Field(serializer=str)
+    Director = scrapy.Field()
+    Badges = scrapy.Field()
+    Stars = scrapy.Field()
+    Img_src = scrapy.Field()
+    Description = scrapy.Field()
