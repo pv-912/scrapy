@@ -15,7 +15,7 @@ SPIDER_MODULES = ['IMDB_image.spiders']
 NEWSPIDER_MODULE = 'IMDB_image.spiders'
 
 
-IMAGES_STORE = '/home/legolas/Downloads/scrap'
+IMAGES_STORE = 'images'
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'IMDB_image (+http://www.yourdomain.com)'
@@ -28,7 +28,7 @@ ROBOTSTXT_OBEY = True
 # ITEM_PIPELINES = {
 #    'IMDB_image.pipelines.ImdbImagePipeline': 300,
 # }
-ITEM_PIPELINES = {'scrapy.pipelines.images.ImagesPipeline': 1}
+ITEM_PIPELINES = {'IMDB_image.pipelines.ImdbImagePipeline': 1}
 
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)

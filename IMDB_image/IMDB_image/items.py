@@ -44,4 +44,8 @@ class ImageItem(scrapy.Item):
         input_processor=MapCompose(unicode.strip),
         output_processor=Join(),
     )
+    image_paths = scrapy.Field(
+        input_processor=MapCompose(unicode.strip),
+        output_processor=Join(),
+    )
     images = scrapy.Field()
